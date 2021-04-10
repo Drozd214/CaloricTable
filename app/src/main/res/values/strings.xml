@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Таблиця Калорійності</string>
+
+    <string name="register">Зареєструватись</string>
+    
+    <string name="sex">Стать</string>
+    <string name="male">Чоловік</string>
+    <string name="female">Жінка</string>
+    <string name="height">Зріст (см)</string>
+    <string name="weight">Вага (кг)</string>
+    <string name="year_of_birth">Рік народження</string>
+    <string name="goal">Ціль</string>
+
+    <string name="lose_weight_goal">Скинути вагу</string>
+    <string name="gain_weight_goal">Набрати масу</string>
+    <string name="keep_fit_goal">Підтримувати форму</string>
+    
+    <string name="hint_fill_all_fields">Будь ласка, заповність всі поля</string>
+    <string name="permission_denied">Permission denied</string>
+
+</resources>

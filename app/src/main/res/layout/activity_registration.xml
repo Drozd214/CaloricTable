@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registrationScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Made by Oleksandr Karpiuk"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:rotation="-45"
+        android:elevation="1000dp"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/default_user_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sexText"
+                style="@style/LabelTextView"
+                android:layout_marginTop="8dp"
+                android:text="@string/sex"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+
+            <RadioGroup
+                android:id="@+id/sexRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/sexText"
+                app:layout_constraintTop_toBottomOf="@+id/sexText">
+
+                <RadioButton
+                    android:id="@+id/femaleRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/maleRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/heightText"
+                style="@style/LabelTextView"
+                android:layout_marginTop="16dp"
+                android:text="@string/height"
+                app:layout_constraintStart_toStartOf="@+id/sexText"
+                app:layout_constraintTop_toBottomOf="@+id/sexRadioGroup" />
+
+            <EditText
+                android:id="@+id/heightEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/heightText" />
+
+            <TextView
+                android:id="@+id/weightText"
+                style="@style/LabelTextView"
+                android:layout_marginTop="16dp"
+                android:text="@string/weight"
+                app:layout_constraintStart_toStartOf="@+id/sexText"
+                app:layout_constraintTop_toBottomOf="@+id/heightEditText" />
+
+            <EditText
+                android:id="@+id/weightEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weightText" />
+
+            <TextView
+                android:id="@+id/yearOfBirthText"
+                style="@style/LabelTextView"
+                android:layout_marginTop="16dp"
+                android:text="@string/year_of_birth"
+                app:layout_constraintStart_toStartOf="@+id/sexText"
+                app:layout_constraintTop_toBottomOf="@+id/weightEditText" />
+
+            <EditText
+                android:id="@+id/yearOfBirthEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfBirthText" />
+
+            <TextView
+                android:id="@+id/goalText"
+                style="@style/LabelTextView"
+                android:layout_marginTop="16dp"
+                android:text="@string/goal"
+                app:layout_constraintStart_toStartOf="@+id/sexText"
+                app:layout_constraintTop_toBottomOf="@+id/yearOfBirthEditText" />
+
+            <Spinner
+                android:id="@+id/goals_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@+id/goalText"
+                tools:layout_editor_absoluteX="16dp"
+                tools:listitem="@layout/support_simple_spinner_dropdown_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_background"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
