@@ -1,0 +1,33 @@
+## App components
+
+Zoom SDK v.5.4.3.613
+
+## Description of the audio fix
+
+Zoom SDK use the native library for fetching microphones as builtin, microphone in earphones or bluetooth devices. As for Android TVs doesn't have this types of microphone and use usb-camera. So when user need audio, we off speakerphones and it allows TV record and share audio from microphone in usb-camera.
+
+```java
+ setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+ am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+ am.setSpeakerphoneOn(false);
+```
+This code you can find in MyMeetingActivity.java file in 756-758 lines.
+
+## Audio format used by Zoom
+
+Zoom used AudioTrack in android for managed and played audio in Android. Also Zoom used next parameters:
+
+1) Mono audio format;
+2) One channel for audio;
+3) 48,000 Hz sample rate;
+4) PCM 16 Bit Audio Codec
+
+## Zoom Token
+
+Zoom use JWT (JSON Web Token) for initialization ZoomSdk. For creating this JWT Zoom use custom Header and Payload according to [example here](https://marketplace.zoom.us/docs/sdk/native-sdks/auth)
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
