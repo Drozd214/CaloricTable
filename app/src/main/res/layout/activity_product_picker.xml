@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Made by Oleksandr Karpiuk"
-        android:gravity="center"
-        android:textSize="32sp"
-        android:rotation="-45"
-        android:elevation="1000dp"/>
-
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"
         android:layout_width="match_parent"

@@ -6,15 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Made by Oleksandr Karpiuk"
-        android:gravity="center"
-        android:textSize="32sp"
-        android:rotation="-45"
-        android:elevation="1000dp"/>
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
