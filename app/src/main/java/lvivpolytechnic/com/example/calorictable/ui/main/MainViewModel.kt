@@ -17,6 +17,12 @@ class MainViewModel(
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> = _currentUser
 
+    private val _isAuthorized = MutableLiveData<Boolean>(false)
+    val isAuthorized: LiveData<Boolean> = _isAuthorized
+
+    private var _isCommonFragmentVisible = MutableLiveData<Boolean>(false)
+    val isCommonFragmentVisible = _isCommonFragmentVisible
+
     //Maybe it's a unnecessary parameter
     var isDataLoad = false
 
@@ -28,6 +34,14 @@ class MainViewModel(
                 isDataLoad = true
             }
         }
+    }
+
+    fun isUserAuthorized(isAuthorized: Boolean) {
+        this._isAuthorized.value = isAuthorized
+    }
+
+    fun setIsCommonFragmentVisible(isVisible: Boolean) {
+        _isCommonFragmentVisible.value = isVisible
     }
 
 

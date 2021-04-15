@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import lvivpolytechnic.com.example.calorictable.CaloricTableApplication
 import lvivpolytechnic.com.example.calorictable.R
 import lvivpolytechnic.com.example.calorictable.databinding.ActivityMainBinding
@@ -72,9 +75,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         viewModel.currentUser.observe(this, Observer {currentUser ->
             if(currentUser == null) {
                 startActivity(Intent(this, RegistrationActivity::class.java))
+            } else (
+                    if(!viewModel.isAuthorized.value!!) checkAccess())
+        })
+
+        viewModel.isCommonFragmentVisible.observe(this, Observer {
+            if(it) {
+                loadFragment(CommonInformationFragment())
             } else {
-                //TODO biometric credentials
-                checkAccess()
+                loadFragment(RationFragment())
             }
         })
     }
@@ -86,7 +95,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 val promptInfo = buildBiometricPrompt()
                 biometricPrompt!!.authenticate(promptInfo!!)
             }
-            else -> loadFragment(CommonInformationFragment())
+//            else -> {
+//                loadFragment(CommonInformationFragment())
+//                viewModel.isAuthorized = true
+//            }
         }
     }
 
@@ -110,8 +122,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    runOnUiThread { snack("Авторизовано")}
-                    loadFragment(CommonInformationFragment())
+                    runOnUiThread {
+                        snack("Авторизовано")
+                        viewModel.isUserAuthorized(true)
+                        viewModel.setIsCommonFragmentVisible(true)
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
@@ -142,13 +157,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return loadFragment(when(item.itemId) {
+        return when(item.itemId) {
             R.id.navigationCommonInformation -> {
-                CommonInformationFragment()
+                viewModel.setIsCommonFragmentVisible(true)
+                true
             }
             else -> {
-                RationFragment()
+                viewModel.setIsCommonFragmentVisible(false)
+                true
             }
-        })
+        }
     }
 }

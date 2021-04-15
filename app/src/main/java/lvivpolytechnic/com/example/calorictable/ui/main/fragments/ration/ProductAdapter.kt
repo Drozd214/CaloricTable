@@ -13,6 +13,8 @@ class ProductAdapter(
 ) : RecyclerView.Adapter<ProductHolder>() {
 
     private lateinit var binding: ItemProductBinding
+    var onItemDeleteButtonCLickedListener: ((Product, Int) -> Unit)? = null
+    var onItemCLickedListener: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolder {
         binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,18 +26,31 @@ class ProductAdapter(
     }
 
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
-        holder.bind(products[position])
+        val product = products[position]
+        holder.bind(product, onItemDeleteButtonCLickedListener, onItemCLickedListener, position)
     }
 }
 
-class ProductHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
+class ProductHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(product: Product) {
+    fun bind(
+        product: Product,
+        deleteListener: ((Product, Int) -> Unit)?,
+        itemClickedListener: ((Product) -> Unit)?,
+        position: Int
+    ) {
         //TODO bind button listener of delete action
         with(binding) {
             productName.text = product.name
             productValue.text = "${product.capacity} x 1g"
             calories.text = (product.calories * product.capacity / 100).toString()
+            deleteProductButton.setOnClickListener {
+                deleteListener?.invoke(product, position)
+            }
+            rootLayout.setOnClickListener {
+                itemClickedListener?.invoke(product)
+            }
+
         }
     }
 }

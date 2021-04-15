@@ -48,31 +48,11 @@ class RegistrationViewModel(
 
         CoroutineScope(Dispatchers.IO).launch {
             userRepository.saveUser(user)
-            val products: List<Product> = mockedData(user.id)
+            val products: List<Product> = listOf()
             usersProductsRepository.addProducts(products)
             withContext(Dispatchers.Main) {
                 isRegisterSuccess.value = true
             }
         }
-    }
-
-    private fun mockedData(id: Int): List<Product> {
-        val mockedProducts = mutableListOf<Product>()
-        mockedProducts.apply {
-            val product = Product(0, 0, "", "", 0, 0, 0, 0, 0, EatingTime.BREAKFAST)
-            add(product.copy(userId = id, calories = 150, capacity = 50, name = "1", eatingTime = EatingTime.BREAKFAST))
-            add(product.copy(userId = id, calories = 400, capacity = 25, name = "2", eatingTime = EatingTime.SUPPER))
-            add(product.copy(userId = id, calories = 527, capacity = 10, name = "3", eatingTime = EatingTime.SECOND_DINNER))
-            add(product.copy(userId = id, calories = 50, capacity = 50, name = "4", eatingTime = EatingTime.BREAKFAST))
-            add(product.copy(userId = id, calories = 15, capacity = 100, name = "5", eatingTime = EatingTime.DINNER))
-            add(product.copy(userId = id, calories = 540, capacity = 15, name = "6", eatingTime = EatingTime.SUPPER))
-            add(product.copy(userId = id, calories = 300, capacity = 30, name = "7", eatingTime = EatingTime.BREAKFAST))
-            add(product.copy(userId = id, calories = 230, capacity = 50, name = "8", eatingTime = EatingTime.BREAKFAST))
-            add(product.copy(userId = id, calories = 100, capacity = 61, name = "9", eatingTime = EatingTime.SECOND_DINNER))
-            add(product.copy(userId = id, calories = 143, capacity = 35, name = "10", eatingTime = EatingTime.SUPPER))
-            add(product.copy(userId = id, calories = 278, capacity = 50, name = "11", eatingTime = EatingTime.SUPPER))
-            add(product.copy(userId = id, calories = 119, capacity = 123, name = "12", eatingTime = EatingTime.BREAKFAST))
-        }
-        return mockedProducts
     }
 }

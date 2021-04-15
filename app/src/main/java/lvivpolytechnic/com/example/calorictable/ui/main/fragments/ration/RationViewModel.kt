@@ -84,5 +84,14 @@ class RationViewModel(
         _isSupperProductsVisible.value = !_isSupperProductsVisible.value!!
     }
 
+    fun deleteProduct(product: Product) {
+        CoroutineScope(Dispatchers.IO).launch {
+            usersProductRepository.deleteProductFromId(product.id)
+            val gettingProduct = usersProductRepository.getProducts(user.value!!.id)
+            withContext(Dispatchers.Main) {
+                _products.value = gettingProduct
+            }
+        }
+    }
 
 }

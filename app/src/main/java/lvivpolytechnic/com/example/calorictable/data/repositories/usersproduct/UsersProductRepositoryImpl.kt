@@ -64,4 +64,24 @@ class UsersProductRepositoryImpl(
         return gettingProducts
     }
 
+    override suspend fun getProductFromId(id: Int): Product {
+        val products =  usersProductStore.getProductFromId(id)
+        return Product(
+            id = products[0].id,
+            userId = products[0].userId,
+            name = products[0].name,
+            imageUrl = products[0].imageUrl,
+            capacity = products[0].capacityInGrams,
+            calories = products[0].calories,
+            carbohydrates = products[0].carbohydrates,
+            protein = products[0].protein,
+            fat = products[0].fat,
+            eatingTime = products[0].eatingTime
+        )
+    }
+
+    override suspend fun deleteProductFromId(id: Int) {
+        usersProductStore.deleteProductFromId(id)
+    }
+
 }

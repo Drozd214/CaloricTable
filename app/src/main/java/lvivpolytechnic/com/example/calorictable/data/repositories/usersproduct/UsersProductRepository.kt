@@ -10,4 +10,8 @@ interface UsersProductRepository {
     suspend fun addProducts(products: List<Product>)
 
     suspend fun getProducts(userId: Int): List<Product>
+
+    suspend fun getProductFromId(id: Int): Product
+
+    suspend fun deleteProductFromId(id: Int)
 }

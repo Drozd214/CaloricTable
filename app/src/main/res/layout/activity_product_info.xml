@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Made by Oleksandr Karpiuk"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:rotation="-45"
+        android:elevation="1000dp"/>
+
+    <TextView
+        android:id="@+id/productNameText"
+        style="@style/LabelTextView"
+        android:text="Страва"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Яйце куряче"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/productNameText"
+        app:layout_constraintTop_toBottomOf="@+id/productNameText" />
+
+    <TextView
+        android:id="@+id/productCapacityText"
+        style="@style/LabelTextView"
+        android:layout_marginTop="16dp"
+        android:text="Кількість"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+    <EditText
+        android:id="@+id/productCapacity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:inputType="number"
+        android:minWidth="50dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/productNameText"
+        app:layout_constraintTop_toBottomOf="@+id/productCapacityText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:text=" x 1g"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/productCapacity"
+        app:layout_constraintStart_toEndOf="@+id/productCapacity"
+        app:layout_constraintTop_toTopOf="@+id/productCapacity" />
+
+    <TextView
+        android:id="@+id/eatingTimeText"
+        style="@style/LabelTextView"
+        android:layout_marginTop="16dp"
+        android:text="Прийом їжі"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productCapacity" />
+
+    <Spinner
+        android:id="@+id/eatingTime_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@+id/eatingTimeText"
+        tools:layout_editor_absoluteX="16dp"
+        tools:listitem="@layout/support_simple_spinner_dropdown_item" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:text="Зберегти"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

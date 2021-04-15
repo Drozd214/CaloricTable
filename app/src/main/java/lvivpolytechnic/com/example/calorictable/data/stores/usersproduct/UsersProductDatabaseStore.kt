@@ -9,4 +9,8 @@ interface UsersProductDatabaseStore {
     suspend fun addProducts(products: List<UsersProductDatabase>)
 
     suspend fun getProducts(userId: Int): List<UsersProductDatabase>
+
+    suspend fun getProductFromId(id: Int): List<UsersProductDatabase>
+
+    suspend fun deleteProductFromId(id: Int)
 }

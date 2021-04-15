@@ -1,9 +1,11 @@
 package lvivpolytechnic.com.example.calorictable.ui.main.fragments.ration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +15,8 @@ import lvivpolytechnic.com.example.calorictable.CaloricTableApplication
 import lvivpolytechnic.com.example.calorictable.databinding.FragmentRationBinding
 import lvivpolytechnic.com.example.calorictable.models.EatingTime
 import lvivpolytechnic.com.example.calorictable.models.Product
+import lvivpolytechnic.com.example.calorictable.ui.productinfo.ProductInfoActivity
+import lvivpolytechnic.com.example.calorictable.ui.productpicker.ProductPickerActivity
 import javax.inject.Inject
 
 class RationFragment : Fragment() {
@@ -22,7 +26,6 @@ class RationFragment : Fragment() {
     private lateinit var viewModel: RationViewModel
     @Inject lateinit var factory: RationViewModelFactory
 
-    //TODO create adapters and init RV
     private lateinit var breakfastAdapter: ProductAdapter
     private lateinit var dinnerAdapter: ProductAdapter
     private lateinit var secondDinnerAdapter: ProductAdapter
@@ -77,7 +80,13 @@ class RationFragment : Fragment() {
         with(binding.breakfastItem.itemProductsRecycleView) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ProductAdapter(listOf()).apply {
-                //itemCLickListener
+                onItemDeleteButtonCLickedListener = {product, position ->
+                    viewModel.deleteProduct(product)
+                }
+
+                onItemCLickedListener = {product ->
+                    launchProductInfo(product)
+                }
             }.also {
                 breakfastAdapter = it
             }
@@ -86,7 +95,13 @@ class RationFragment : Fragment() {
         with(binding.dinnerItem.itemProductsRecycleView) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ProductAdapter(listOf()).apply {
-                //itemCLickListener
+                onItemDeleteButtonCLickedListener = {product, position ->
+                    viewModel.deleteProduct(product)
+                }
+
+                onItemCLickedListener = {product ->
+                    launchProductInfo(product)
+                }
             }.also {
                 dinnerAdapter = it
             }
@@ -95,7 +110,13 @@ class RationFragment : Fragment() {
         with(binding.secondDinnerItem.itemProductsRecycleView) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ProductAdapter(listOf()).apply {
-                //itemCLickListener
+                onItemDeleteButtonCLickedListener = {product, position ->
+                    viewModel.deleteProduct(product)
+                }
+
+                onItemCLickedListener = {product ->
+                    launchProductInfo(product)
+                }
             }.also {
                 secondDinnerAdapter = it
             }
@@ -104,10 +125,23 @@ class RationFragment : Fragment() {
         with(binding.supperItem.itemProductsRecycleView) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ProductAdapter(listOf()).apply {
-                //itemCLickListener
+                onItemDeleteButtonCLickedListener = {product, position ->
+                    viewModel.deleteProduct(product)
+                }
+
+                onItemCLickedListener = {product ->
+                    launchProductInfo(product)
+                }
             }.also {
                 supperAdapter = it
             }
+        }
+
+        with(binding) {
+            breakfastItem.addProductButton.setOnClickListener { addNewProduct(EatingTime.BREAKFAST) }
+            dinnerItem.addProductButton.setOnClickListener { addNewProduct(EatingTime.DINNER) }
+            secondDinnerItem.addProductButton.setOnClickListener { addNewProduct(EatingTime.SECOND_DINNER) }
+            supperItem.addProductButton.setOnClickListener { addNewProduct(EatingTime.SUPPER) }
         }
     }
 
@@ -183,6 +217,25 @@ class RationFragment : Fragment() {
         } else {
             View.GONE
         }
+    }
+
+    private fun addNewProduct(eatingTime: EatingTime) {
+        startActivity(Intent(requireContext(), ProductPickerActivity::class.java).apply {
+            putExtra("eatingTime", eatingTime)
+        })
+    }
+
+    private fun launchProductInfo(product: Product) {
+        startActivity(Intent(requireContext(), ProductInfoActivity::class.java).apply {
+            putExtra("isNewProduct", false)
+            putExtra("productId", product.id)
+            putExtra("eatingTime", EatingTime.BREAKFAST)
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.init()
     }
 
 }

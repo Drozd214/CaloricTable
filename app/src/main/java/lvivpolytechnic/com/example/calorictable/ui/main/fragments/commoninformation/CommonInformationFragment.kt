@@ -2,17 +2,27 @@ package lvivpolytechnic.com.example.calorictable.ui.main.fragments.commoninforma
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import lvivpolytechnic.com.example.calorictable.CaloricTableApplication
 import lvivpolytechnic.com.example.calorictable.R
+import lvivpolytechnic.com.example.calorictable.api.ingredients.ingredientinfo.IngredientInfoAPI
+import lvivpolytechnic.com.example.calorictable.api.ingredients.ingredientsearch.IngredientSearch
+import lvivpolytechnic.com.example.calorictable.api.ingredients.ingredientsearch.IngredientSearchAPI
 import lvivpolytechnic.com.example.calorictable.databinding.FragmentCommonInformationBinding
 import lvivpolytechnic.com.example.calorictable.models.User
+import retrofit2.await
+import retrofit2.awaitResponse
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -22,6 +32,9 @@ class CommonInformationFragment : Fragment() {
 
     private lateinit var viewModel: CommonInformationViewModel
     @Inject lateinit var factory: CommonInformationViewModelFactory
+
+    @Inject lateinit var ingredientSearchAPI: IngredientSearchAPI
+    @Inject lateinit var ingredientInfoAPI: IngredientInfoAPI
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCommonInformationBinding.inflate(inflater, container, false)
@@ -50,6 +63,16 @@ class CommonInformationFragment : Fragment() {
     private fun init() {
         initUI()
         initObservers()
+
+        CoroutineScope(Dispatchers.Unconfined).launch {
+            val ingredients = ingredientSearchAPI.getIngredientSearch("banana")
+            val ing = ingredients.body()?.results
+            if(ing != null) {
+                val id = ing[0].id
+                val ingredientInfo = ingredientInfoAPI.getIngredientInfo(id)
+                val info = ingredientInfo.body()
+            }
+        }
     }
 
     private fun initUI() {
@@ -60,6 +83,14 @@ class CommonInformationFragment : Fragment() {
         binding.carbohydrateItem.progressTitle.text = "Вуглеводи"
         binding.proteinItem.progressTitle.text = "Білки"
         binding.fatItem.progressTitle.text = "Жири"
+
+        binding.ageItem.addParameterButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Функціонал у розробці", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.weightItem.addParameterButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Функціонал у розробці", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initObservers() {
@@ -103,24 +134,21 @@ class CommonInformationFragment : Fragment() {
             progressCurrentValue.text = "$carbohydrates г. з"
             progressRecommendedValue.text = "200"
             progressValue.text = "${carbohydrates * 100 / 200} %"
-            //progressBar.progress = carbohydrates * 100 / 200
-            progressBar.progress = 35
+            progressBar.progress = carbohydrates * 100 / 200
         }
 
         with(binding.proteinItem) {
             progressCurrentValue.text = "$protein г. з"
             progressRecommendedValue.text = "130"
             progressValue.text = "${protein * 100 / 130} %"
-            //progressBar.progress = protein * 100 / 130
-            progressBar.progress = 95
+            progressBar.progress = protein * 100 / 130
         }
 
         with(binding.fatItem) {
             progressCurrentValue.text = "$fat г. з"
             progressRecommendedValue.text = "60"
             progressValue.text = "${fat * 100 / 60} %"
-            //progressBar.progress = fat * 100 / 60
-            progressBar.progress = 87
+            progressBar.progress = fat * 100 / 60
         }
     }
 

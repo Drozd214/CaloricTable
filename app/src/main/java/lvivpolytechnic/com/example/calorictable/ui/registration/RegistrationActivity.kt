@@ -164,7 +164,9 @@ class RegistrationActivity : AppCompatActivity() {
     private fun subscribeViews() {
         viewModel.isRegisterSuccess.observe(this, Observer {isRegisterSuccess ->
             if(isRegisterSuccess) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
                 startActivity(intent)
                 finish()
             }

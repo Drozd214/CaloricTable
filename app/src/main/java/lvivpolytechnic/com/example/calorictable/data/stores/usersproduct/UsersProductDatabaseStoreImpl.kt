@@ -18,4 +18,12 @@ class UsersProductDatabaseStoreImpl(
     override suspend fun getProducts(userId: Int): List<UsersProductDatabase> {
         return usersProductDao.getProducts(userId)
     }
+
+    override suspend fun getProductFromId(id: Int): List<UsersProductDatabase> {
+        return usersProductDao.getProductFromId(id)
+    }
+
+    override suspend fun deleteProductFromId(id: Int) {
+        usersProductDao.deleteProductFromId(id)
+    }
 }
